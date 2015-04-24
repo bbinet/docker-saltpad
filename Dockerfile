@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -yq --no-install-recommends python-pip \
     git ca-certificates
-RUN pip install gunicorn jinja2 flask flask-wtf requests werkzeug
+RUN pip install futures gunicorn jinja2 flask flask-wtf requests werkzeug
 
 RUN git clone https://github.com/tinyclues/saltpad.git /root/saltpad
 ENV PYTHONPATH /root/saltpad
