@@ -32,5 +32,6 @@ For example:
 
     $ docker run --name saltpad \
         -v /home/saltpad/local_settings.py:/root/saltpad/saltpad/local_settings.py:ro \
+        --link salt-master:salt-master
         -p 80:80 \
         bbinet/saltpad
