@@ -11,11 +11,10 @@ RUN pip install futures gunicorn jinja2 flask flask-wtf requests werkzeug
 RUN git clone https://github.com/tinyclues/saltpad.git /root/saltpad
 ENV PYTHONPATH /root/saltpad
 ENV SALTPAD_VERSION a66449b38c816ae3a35e1e61d06ce550fa7d51eb
-WORKDIR /root/saltpad/saltpad
-RUN git reset --hard ${SALTPAD_VERSION}
+RUN git reset --hard -C /root/saltpad ${SALTPAD_VERSION}
 
 VOLUME ["/root/saltpad/saltpad/local_settings.py"]
 
 EXPOSE 80
 
-CMD ["gunicorn", "--bind=0.0.0.0:80", "--threads=2", "saltpad:app.app"]
+CMD ["gunicorn", "--bind=0.0.0.0:80", "--threads=2", "--chdir=/root/saltpad/saltpad", "saltpad.app:app"]
