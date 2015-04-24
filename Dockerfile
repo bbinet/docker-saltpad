@@ -6,14 +6,15 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -yq --no-install-recommends python-pip \
     git ca-certificates
-RUN git clone https://github.com/tinyclues/saltpad.git /root/saltpad
 RUN pip install waitress jinja2 flask flask-wtf requests werkzeug
-# pymongo wheel==0.22.0
+
+RUN git clone https://github.com/tinyclues/saltpad.git /root/saltpad
+ENV PYTHONPATH /root/saltpad
+ENV SALTPAD_VERSION a66449b38c816ae3a35e1e61d06ce550fa7d51eb
+WORKDIR /root/saltpad/saltpad
+RUN git reset --hard ${SALTPAD_VERSION}
 
 VOLUME ["/root/saltpad/saltpad/local_settings.py"]
-
-ENV PYTHONPATH /root/saltpad
-WORKDIR /root/saltpad/saltpad
 
 EXPOSE 80
 
