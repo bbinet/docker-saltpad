@@ -14,7 +14,8 @@ ENV SALTPAD_VERSION a66449b38c816ae3a35e1e61d06ce550fa7d51eb
 RUN git --git-dir /root/saltpad/.git --work-tree=/root/saltpad reset --hard ${SALTPAD_VERSION}
 
 VOLUME ["/root/saltpad/saltpad/local_settings.py"]
+VOLUME ["/config"]
 
-EXPOSE 80
+EXPOSE 443
 
-CMD ["gunicorn", "--bind=0.0.0.0:80", "--threads=2", "--chdir=/root/saltpad/saltpad", "saltpad.app:app"]
+CMD ["gunicorn", "--bind=0.0.0.0:443", "--threads=2", "--certfile=/config/server.crt", "--keyfile=/config/server.key", "--chdir=/root/saltpad/saltpad", "saltpad.app:app"]
