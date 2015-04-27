@@ -20,11 +20,13 @@ You can now push the new image to the public registry:
 Run
 ---
 
-Then, when starting your saltpad container, you will want to bind ports `80`
+Then, when starting your saltpad container, you will want to bind ports `443`
 from the saltpad container to a host external port.
 The saltpad container will read its configuration from the
 `/root/saltpad/saltpad/local_settings.py` file, so make sure this file is
 available to docker as a volume.
+You must also provide the `server.key` and `server.crt`ssl files in the
+`/etc/pki/tls/certs` volume.
 
 For example:
 
@@ -32,6 +34,7 @@ For example:
 
     $ docker run --name saltpad \
         -v /home/saltpad/local_settings.py:/root/saltpad/saltpad/local_settings.py:ro \
+        -v /home/saltpad/certs:/etc/pki/tls/certs:ro \
         --link salt-master:salt-master
-        -p 80:80 \
+        -p 443:443 \
         bbinet/saltpad
